@@ -10,7 +10,9 @@ class AppRoot extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => WeatherDataCubit(),)
+        BlocProvider(
+          create: (context) => WeatherDataCubit()..getWeatherData(),
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
