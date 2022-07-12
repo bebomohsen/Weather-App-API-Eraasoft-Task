@@ -14,3 +14,5 @@ class WeatherErrorState extends WeatherDataState {}
 class WeatherRefreshedState extends WeatherDataState {}
 
 class WeatherCityChangedState extends WeatherDataState {}
+
+class WeatherSearchBarEnableState extends WeatherDataState {}

@@ -14,7 +14,8 @@ class Home extends StatelessWidget {
           body: Container(
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/images/clear.gif'),
+                      image:
+                          AssetImage('assets/images/${cubit.statusImage}.gif'),
                       fit: BoxFit.cover)),
               child: cubit.weatherData == null
                   ? Center(
@@ -34,39 +35,65 @@ class Home extends StatelessWidget {
                   : Padding(
                       padding: const EdgeInsets.fromLTRB(11, 50, 11, 50),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
+                          cubit.needSearchBar
+                              ? FittedBox(
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: TextField(
+                                              autofocus: true,
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                              controller: cubit.txtController,
+                                              decoration: InputDecoration(
+                                                  labelStyle: TextStyle(
+                                                      color: Colors.blueAccent),
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.white),
+                                                  labelText: 'Country',
+                                                  hintText:
+                                                      'Enter Country Name')),
+                                        ),
+                                        ElevatedButton(
+                                            onPressed: cubit.selectCountry,
+                                            child: Text('OK'))
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : InkWell(
+                                  onTap: cubit.enableSearchBar,
+                                  child: Text(
                                     cubit.weatherData!.name!,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 50),
                                   ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        cubit.weatherData!.main!.feelsLike!
-                                            .round()
-                                            .toString(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 170),
-                                      ),
-                                      Text(
-                                        '°',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 130),
-                                      ),
-                                    ],
-                                  )
+                                ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    cubit.weatherData!.main!.feelsLike!
+                                        .round()
+                                        .toString(),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 170),
+                                  ),
+                                  Text(
+                                    '°',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 130),
+                                  ),
                                 ],
                               ),
                               RotatedBox(
@@ -78,6 +105,7 @@ class Home extends StatelessWidget {
                                   ))
                             ],
                           ),
+                          Spacer(),
                           Container(
                             padding: EdgeInsets.all(15),
                             decoration: BoxDecoration(
